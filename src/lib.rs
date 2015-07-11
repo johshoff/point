@@ -1,5 +1,6 @@
 use std::ops::{ Sub, Add, Mul, Div };
 use std::clone::Clone;
+use std::cmp::{PartialEq};
 
 #[derive(Copy, Clone)]
 pub struct Point<T> {
@@ -48,5 +49,11 @@ impl<T: Div<T, Output=T> + Copy> Div<T> for Point<T> {
     fn div(self, rhs: T) -> Point<T> {
         Point { x: self.x / rhs,
                 y: self.y / rhs }
+    }
+}
+
+impl<T: PartialEq> PartialEq for Point<T> {
+    fn eq(&self, other: &Point<T>) -> bool {
+        self.x == other.x && self.y == other.y
     }
 }
