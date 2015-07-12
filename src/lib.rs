@@ -2,7 +2,7 @@ use std::ops::{ Sub, Add, Mul, Div };
 use std::clone::Clone;
 use std::cmp::{PartialEq};
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Point<T> {
     pub x : T,
     pub y : T,
@@ -56,4 +56,41 @@ impl<T: PartialEq> PartialEq for Point<T> {
     fn eq(&self, other: &Point<T>) -> bool {
         self.x == other.x && self.y == other.y
     }
+}
+
+#[test]
+fn test_eq() {
+    assert_eq!(Point::new(1, 2), Point::new(1, 2));
+
+    assert!(Point::new(1, 3) != Point::new(1, 2));
+    assert!(Point::new(3, 2) != Point::new(1, 2));
+    assert!(Point::new(1, 1) != Point::new(2, 2));
+
+    assert_eq!(Point::new(1f32, 2f32), Point::new(1f32, 2f32));
+
+    assert!(Point::new(1f32, 3f32) != Point::new(1f32, 2f32));
+    assert!(Point::new(3f32, 2f32) != Point::new(1f32, 2f32));
+    assert!(Point::new(1f32, 1f32) != Point::new(2f32, 2f32));
+}
+
+#[test]
+fn test_sub() {
+    assert_eq!(Point::new(1, 2) - Point::new(1, 2), Point::new(0, 0));
+    assert_eq!(Point::new(1f64, 2f64) - Point::new(0f64, 4f64), Point::new(1f64, -2f64));
+}
+
+#[test]
+fn test_add() {
+    assert_eq!(Point::new(1, 2) + Point::new(1, 2), Point::new(2, 4));
+}
+
+#[test]
+fn test_mul() {
+    assert_eq!(Point::new(1, 2) * 5, Point::new(5, 10));
+}
+
+#[test]
+fn test_div() {
+    assert_eq!(Point::new(1, 2) / 5, Point::new(0, 0));
+    assert_eq!(Point::new(1f32, 2f32) / 5f32, Point::new(1f32/5f32, 2f32/5f32));
 }
